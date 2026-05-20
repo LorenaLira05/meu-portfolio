@@ -8,10 +8,24 @@ export function Contact() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Mensagem enviada! Obrigado pelo contato.");
-    setFormData({ name: "", email: "", message: "" });
+    setStatus("sending");
+
+    const res = await fetch("https://formspree.io/f/mqejpdqz", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+
+    if (res.ok) {
+      setStatus("success");
+      setFormData({ name: "", email: "", message: "" });
+    } else {
+      setStatus("error");
+    }
   };
 
   const contactInfo = [
@@ -99,12 +113,37 @@ export function Contact() {
                   className="w-full bg-[#F5F7CD] border-[3px] border-[#907162] p-3 font-sans text-sm outline-none focus:bg-[#D6FCFF] transition-colors resize-none"
                 />
               </div>
-              <button 
-                type="submit" 
-                className="group flex items-center justify-center gap-3 w-full bg-[#907162] text-[#F5F7CD] border-[3px] border-[#907162] p-4 font-mono font-bold uppercase tracking-widest hover:bg-[#FCACD1] hover:text-[#907162] transition-colors shadow-[4px_4px_0px_0px_rgba(144,113,98,0.5)]"
+
+              {/* Mensagem de erro */}
+              {status === "error" && (
+                <p className="font-mono text-xs text-red-500 uppercase tracking-widest">
+                  Erro ao enviar. Tente novamente.
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "sending" || status === "success"}
+                className={`group flex items-center justify-center gap-3 w-full border-[3px] border-[#907162] p-4 font-mono font-bold uppercase tracking-widest transition-colors shadow-[4px_4px_0px_0px_rgba(144,113,98,0.5)] disabled:opacity-70 disabled:cursor-not-allowed
+                  ${status === "success"
+                    ? "bg-[#D6FCFF] text-[#907162]"
+                    : "bg-[#907162] text-[#F5F7CD] hover:bg-[#FCACD1] hover:text-[#907162]"
+                  }`}
               >
-                Enviar Mensagem
-                <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                {status === "idle" && (
+                  <>
+                    Enviar Mensagem
+                    <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </>
+                )}
+                {status === "sending" && "Enviando..."}
+                {status === "success" && "Mensagem enviada! ✓"}
+                {status === "error" && (
+                  <>
+                    Tentar novamente
+                    <Send size={18} />
+                  </>
+                )}
               </button>
             </form>
           </div>
@@ -112,8 +151,8 @@ export function Contact() {
           {/* Contact Details */}
           <div className="w-full lg:w-2/5 flex flex-col gap-6 relative z-10">
             {contactInfo.map((info, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-[#D6FCFF] border-[3px] border-[#907162] p-6 shadow-[6px_6px_0px_0px_#907162] flex items-center gap-4 hover:-translate-y-1 transition-transform"
               >
                 <div className="bg-[#ffffff] border-[3px] border-[#907162] w-12 h-12 flex items-center justify-center rounded-full shrink-0">
@@ -135,7 +174,7 @@ export function Contact() {
                 </div>
               </div>
             ))}
-            
+
             <div className="mt-auto bg-[#FCACD1] border-[3px] border-[#907162] p-6 shadow-[6px_6px_0px_0px_#907162] rotate-[2deg]">
               <h3 className="font-mono font-bold uppercase tracking-widest text-[#907162] mb-2">Disponível para Projetos</h3>
               <p className="font-sans text-sm text-[#907162] font-medium leading-relaxed">
