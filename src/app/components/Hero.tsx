@@ -26,7 +26,7 @@ export function Hero() {
       </div>
 
       <div className="absolute top-8 left-1/2 -translate-x-1/2 font-sans font-bold text-sm tracking-widest text-[#907162]">
-        lorenaLira
+        Portfólio
       </div>
 
       {/* Main Content */}
@@ -41,7 +41,7 @@ export function Hero() {
           </span>
           
           <div className="absolute -bottom-4 md:-bottom-8 right-0 rotate-12 bg-[#907162] text-[#F5F7CD] px-4 py-1 font-pixel text-xl md:text-2xl shadow-[4px_4px_0px_0px_#FCACD1]">
-            2025
+            2026
           </div>
         </h1>
 
