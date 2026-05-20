@@ -55,7 +55,7 @@ export function Hero() {
 
         <div className="mt-16 md:mt-24">
           <div className="inline-block border-[3px] border-[#907162] rounded-full px-6 py-2 font-mono text-sm uppercase tracking-widest font-bold text-[#907162] mb-8 relative bg-white/50 backdrop-blur-sm shadow-[4px_4px_0px_0px_#907162]">
-            Desenvolvedora de Software
+            Desenvolvedora
             <MousePointer2 className="absolute -bottom-6 -right-6 text-[#907162] fill-[#D6FCFF] w-8 h-8" strokeWidth={1.5} />
           </div>
         </div>
