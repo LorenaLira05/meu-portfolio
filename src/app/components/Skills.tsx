@@ -4,8 +4,8 @@ export function Skills() {
       category: "Back-end & Programação",
       skills: [
         "Node.js (APIs REST, autenticação e integração)",
-        "Java (POO e desenvolvimento orientado a objetos)",
-        "Python (nível básico a intermediário)"
+        "Java (POO e desenvolvimento backend)",
+        "Python (desenvolvimento e dados)"
       ],
       color: "bg-[#FFD9EF]"
     },
